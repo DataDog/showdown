@@ -392,7 +392,7 @@ var _RunSpanGamut = function(text) {
 	text = _DoItalicsAndBold(text);
 
 	// Do hard breaks:
-	text = text.replace(/  +\n/g," <br />\n");
+	text = text.replace(/\n/g," <br />\n");
 
 	return text;
 }
@@ -685,7 +685,7 @@ var _DoHeaders = function(text) {
 		/gm, function() {...});
 	*/
 
-	text = text.replace(/^(\#{1,6})[ \t]*(.+?)[ \t]*\#*\n+/gm,
+	text = text.replace(/^(\#{2,6})[ \t]*(.+?)[ \t]*\#*\n+/gm,
 		function(wholeMatch,m1,m2) {
 			var h_level = m1.length;
 			return hashBlock("<h" + h_level + ' id="' + headerId(m2) + '">' + _RunSpanGamut(m2) + "</h" + h_level + ">");
