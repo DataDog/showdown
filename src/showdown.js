@@ -1065,7 +1065,7 @@ var _FormParagraphs = function(text) {
 		}
 		else if (str.search(/\S/) >= 0) {
 			str = _RunSpanGamut(str);
-			str = str.replace(/^([ \t]*)/g,"<p>");
+			str = str.replace(/^([ \t]*)/g,'<p class = "markdown">');
 			str += "</p>"
 			grafsOut.push(str);
 		}
