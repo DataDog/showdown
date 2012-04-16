@@ -147,6 +147,15 @@ this.makeHtml = function(text) {
 	// attacklab: Restore tildes
 	text = text.replace(/~T/g,"~");
 
+	// mostly taken from https://github.com/github/github-flavored-markdown
+	text = text.replace(/https?\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!]/g, function(wholeMatch,matchIndex){
+		var left = text.slice(0, matchIndex), right = text.slice(matchIndex)
+		if (left.match(/<[^>]+$/) && right.match(/^[^>]*>/)) {return wholeMatch}
+		return "<a href='" + href + "'>" + wholeMatch + "</a>";
+	});
+	text = text.replace(/[a-z0-9_\-+=.]+@[a-z0-9\-]+(\.[a-z0-9-]+)+/ig, function(wholeMatch){return "<a href='mailto:" + wholeMatch + "'>" + wholeMatch + "</a>";});
+
+
 	return text;
 }
 
@@ -984,6 +993,8 @@ var _DoItalicsAndBold = function(text) {
 	text = text.replace(/(\*\*|__)(?=\S)([^\r]*?\S[*_]*)\1/g,
 		"<strong>$2</strong>");
 
+	// from https://github.com/github/github-flavored-markdown
+	text = text.replace(/(\w)_(\w)/g, "$1~E95E$2");
 	text = text.replace(/(\*|_)(?=\S)([^\r]*?\S)\1/g,
 		"<em>$2</em>");
 
